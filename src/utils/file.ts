@@ -6,14 +6,6 @@ dayjs.extend(timezonePlugin);
 dayjs.tz.setDefault("America/Sao_Paulo");
 
 
-
 export function getFileName(url: string) {
-    const regex = /fileId=([a-zA-Z0-9]+)/
-    const fileId = url.match(regex)
-
-    if(fileId) {
-        return `${dayjs().format('DD-MM-YYYY')}_${fileId[1]}`
-    } else {
-        return dayjs().format('DD-MM-YYYYTHH:mm:ss')
-    }
+    return dayjs().format('DD-MM-YYYYTHH-mm-ss')
 }

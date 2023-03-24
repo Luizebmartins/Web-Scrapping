@@ -36,17 +36,16 @@ axios
 
             outputStream.on('finish', () => {
                 console.log(`Arquivo zip salvo em: ${outputZipFilePath}`);
+                const zip = new AdmZip(outputZipFilePath)
+                const zipEntries = zip.getEntries()
+                zipEntries.forEach((zipEntry) => {
+                    const csvContent = zip.readAsText(zipEntry); 
+                    const outputCsvFilePath = path.resolve(outputCsvFolder, `${fileName}.csv`);
+                    
+                    fs.writeFileSync(outputCsvFilePath, csvContent); 
+                });
+     
             });
-
-            const zip = new AdmZip(outputZipFilePath)
-            const zipEntries = zip.getEntries()
-            zipEntries.forEach((zipEntry) => {
-                const csvContent = zip.readAsText(zipEntry); 
-                const outputCsvFilePath = path.resolve(outputCsvFolder, `${fileName}.csv`);
-                
-                fs.writeFileSync(outputCsvFilePath, csvContent); 
-            });
- 
         });
     })
     .catch((err) => {
